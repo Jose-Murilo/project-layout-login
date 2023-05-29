@@ -7,7 +7,7 @@ import { IconBxUserCircle } from '../assets/IconBxUserCircle'
 import { IconPadlock } from '../assets/IconPadlock'
 import IconEye from '../assets/IconEye'
 import IconEyeInvisible from '@/assets/IconEyeInvisible'
-import { useSignInAuth } from './hooks/useSignInAuth'
+import { useSignInAuth } from '../hooks/useSignInAuth'
 
 export default function SignIn() {
   const {
