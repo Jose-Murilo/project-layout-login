@@ -1,125 +1,89 @@
 'use client'
 
+import { decryptData } from '@/utils/crypto'
+import { FormEvent } from 'react'
+import imgHome from '../assets/image-home.svg'
 import Image from 'next/image'
-import imgLogin from '../assets/image-login.svg'
-import Link from 'next/link'
-import { IconBxUserCircle } from '../assets/IconBxUserCircle'
-import { IconPadlock } from '../assets/IconPadlock'
-import IconEye from '../assets/IconEye'
-import IconEyeInvisible from '@/assets/IconEyeInvisible'
-import { useSignInAuth } from '../hooks/useSignInAuth'
+import { AuthorCredits } from '@/components/AuthorCredits'
 
-export default function SignIn() {
-  const {
-    isVisible,
-    setIsVisible,
-    register,
-    handleSubmit,
-    isAuthenticated,
-    submitUserLogin,
-  } = useSignInAuth()
+export default function Home() {
+  const isAuthenticated =
+    localStorage.getItem('isAuthenticated') === 'Authenticated'
 
-  if (!isAuthenticated) {
+  const encryptedDataFromStorage = localStorage.getItem('encryptedData')
+  const { name } = decryptData(encryptedDataFromStorage)
+  console.log(name)
+
+  function handleLogout(event: FormEvent) {
+    event.preventDefault()
+    const confirm = window.confirm('Deseja realmente deslogar?')
+
+    if (confirm) {
+      localStorage.setItem('isAuthenticated', 'notAuthenticated')
+      window.location.href = '/signin'
+    }
+  }
+
+  function deleteUserAccount() {
+    const isDeleted = window.confirm('Deseja realmente apagar sua conta?')
+
+    if (isDeleted) {
+      localStorage.removeItem('encryptedData')
+      localStorage.setItem('isAuthenticated', 'notAuthenticated')
+      window.location.href = '/signin'
+    }
+  }
+
+  if (isAuthenticated) {
     return (
-      <div className="md:grid min-h-screen grid-cols-2">
-        <div className="">
-          <form
-            onSubmit={handleSubmit(submitUserLogin)}
-            className="flex leading-relaxed justify-center items-center min-h-screen"
-          >
-            <div className="flex flex-col gap-5">
-              <section>
-                <h1 className="text-title text-[32px] font-bold">
-                  Seja bem-vindo
-                </h1>
-              </section>
-
-              <section>
-                <div className="relative">
-                  <input
-                    {...register('login')}
-                    className="bg-white-transparent text-sm	p-2 px-8 leading-relaxed w-72 rounded-full"
-                    type="text"
-                    placeholder="Login"
-                  />
-                  <IconBxUserCircle
-                    width={20}
-                    height={18}
-                    className="absolute top-[11px] left-2"
-                  />
-                </div>
-              </section>
-
-              <section>
-                <div className="relative">
-                  <IconPadlock
-                    width={20}
-                    height={18}
-                    className="absolute top-[11px] left-2"
-                  />
-                  <input
-                    {...register('password')}
-                    type={isVisible ? 'password' : `text`}
-                    placeholder="Senha"
-                    className="bg-white-transparent px-8 text-sm leading-relaxed p-2 w-72 rounded-full"
-                  />
-
-                  {isVisible ? (
-                    <IconEye
-                      width={20}
-                      height={20}
-                      onClick={() => setIsVisible((prev) => !prev)}
-                      className="absolute top-[10px] right-5 cursor-pointer"
-                    />
-                  ) : (
-                    <IconEyeInvisible
-                      width={20}
-                      height={20}
-                      onClick={() => setIsVisible((prev) => !prev)}
-                      className="absolute top-[10px] right-5 cursor-pointer"
-                    />
-                  )}
-                </div>
-              </section>
-
-              <section className="flex justify-between items-center">
-                <div className="flex items-center gap-1">
-                  <input className="border-2 " id="remember" type="checkbox" />
-                  <label htmlFor="remember" className="text-[12px] text-title">
-                    Relembre
-                  </label>
-                </div>
-
-                <div>
-                  <Link
-                    href={'/changepassword'}
-                    className="text-title text-[12px]"
-                  >
-                    Esqueci a senha
-                  </Link>
-                </div>
-              </section>
-
-              <button className="bg-title text-white p-2 mt-2 w-72 rounded-full">
-                Login
-              </button>
-
-              <Link
-                className="text-[12px] text-center text-title"
-                href={'/signup'}
+      <div className="md:grid md:text-left flex justify-center text-center min-h-screen grid-cols-2">
+        <div className="p-5">
+          <h1 className="text-5xl text-title mb-5 text-bold">Home</h1>
+          <p>
+            Olá <span className="text-red-600 bold">{name}</span> sejá
+            bem-vindo!!
+          </p>
+          <div className="flex flex-col gap-5">
+            <div className="flex gap-3 md:justify-start justify-center mt-5">
+              <button
+                className="bg-gray-800 p-2 hover:bg-gray-900 text-white cursor-pointer rounded-full"
+                onClick={handleLogout}
               >
-                Não tem conta? Crie aqui.
-              </Link>
+                Deslogar
+              </button>
+              <button
+                className="bg-red-800 transition-all hover:bg-red-900 p-2 text-white cursor-pointer rounded-full"
+                onClick={deleteUserAccount}
+              >
+                Deletar conta
+              </button>
             </div>
-          </form>
+
+            <div className="">
+              <h2>Sistema desenvolvido:</h2>
+              <div className="px-8">
+                <ul className="">
+                  <li>* React</li>
+                  <li>* NextJS(versão:13.4)</li>
+                  <li>* TailwindCSS</li>
+                  <li>* LocalStorage</li>
+                  <li>* crypto.js(Para criptografar dados do localStorage)</li>
+                  <li>* React Hook Form</li>
+                  <li>* TypeScript</li>
+                </ul>
+              </div>
+            </div>
+
+            <AuthorCredits />
+          </div>
         </div>
 
         <div className="hidden md:flex items-center bg-blue-200 justify-center">
-          <Image src={imgLogin} alt="" />
+          <Image src={imgHome} alt="" />
         </div>
       </div>
     )
   } else {
-    window.location.href = '/home'
+    window.location.href = '/signin'
   }
 }
