@@ -6,30 +6,42 @@ type DataFormProps = { login: string; password: string }
 
 export function useSignInAuth() {
   const [isVisible, setIsVisible] = useState(false)
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
+  const [errorLogin, setErrorLogin] = useState(false)
+  const isAuthenticated =
+    localStorage.getItem('isAuthenticated') === 'Authenticated'
 
-  const { register, handleSubmit } = useForm<DataFormProps>()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<DataFormProps>()
 
-  function submitUserLogin(data: DataFormProps) {
-    const { login, password } = data
-
+  function submitUserLogin({ login, password }: DataFormProps) {
     if (login && password) {
+      setErrorLogin(false)
       const encryptedDataFromStorage = localStorage.getItem('encryptedData')
 
-      const {
-        name: loginLocal,
-        email,
-        password: passwordLocal,
-      } = decryptData(encryptedDataFromStorage)
+      if (encryptedDataFromStorage) {
+        const {
+          name: loginLocal,
+          email,
+          password: passwordLocal,
+        } = decryptData(encryptedDataFromStorage)
 
-      if (
-        (login === loginLocal || login === email) &&
-        password === passwordLocal
-      ) {
-        alert('Você foi logado com sucesso!')
+        if (
+          (login === loginLocal || login === email) &&
+          password === passwordLocal
+        ) {
+          alert('Você foi logado com sucesso!')
 
-        localStorage.setItem('isAuthenticated', JSON.stringify(true))
-        window.location.href = '/home'
+          localStorage.setItem('isAuthenticated', 'Authenticated')
+          window.location.href = '/'
+        } else {
+          setErrorLogin(true)
+        }
+      } else {
+        setErrorLogin(true)
       }
     }
   }
@@ -41,5 +53,9 @@ export function useSignInAuth() {
     handleSubmit,
     isAuthenticated,
     submitUserLogin,
+    errorLogin,
+    setErrorLogin,
+    watch,
+    errors,
   }
 }
