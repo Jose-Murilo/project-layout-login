@@ -4,7 +4,13 @@ const ENCRYPTION_KEY = 'chaveDeCriptografia'
 
 // Função para criptografar os dados
 export const encryptData = (
-  data: { name: string; password: string } | string,
+  data:
+    | { name: string; password: string }
+    | string
+    | {
+        newPassword: string
+        confirmNewPassword: string
+      },
 ) => {
   const encryptedData = CryptoJS.AES.encrypt(
     JSON.stringify(data),
