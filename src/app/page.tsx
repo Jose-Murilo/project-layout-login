@@ -37,7 +37,7 @@ export default function Home() {
   if (isAuthenticated) {
     return (
       <div className="md:grid md:text-left flex justify-center text-center min-h-screen grid-cols-2">
-        <div className="p-5">
+        <div className="p-8">
           <h1 className="text-5xl text-title mb-5 text-bold">Home</h1>
           <p>
             Olá <span className="text-red-600 bold">{name}</span> sejá
@@ -55,13 +55,13 @@ export default function Home() {
                 className="bg-red-800 transition-all hover:bg-red-900 p-2 text-white cursor-pointer rounded-full"
                 onClick={deleteUserAccount}
               >
-                Deletar conta
+                Apagar conta
               </button>
             </div>
 
             <div className="">
-              <h2>Sistema desenvolvido:</h2>
-              <div className="px-8">
+              <h2>Sistema desenvolvido com:</h2>
+              <div className="px-5">
                 <ul className="">
                   <li>* React</li>
                   <li>* NextJS(versão:13.4)</li>
