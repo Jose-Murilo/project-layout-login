@@ -1,7 +1,7 @@
 'use client'
 
 import { decryptData } from '@/utils/crypto'
-import { FormEvent } from 'react'
+import { FormEvent, useMemo } from 'react'
 import imgHome from '../assets/image-home.svg'
 import Image from 'next/image'
 import { AuthorCredits } from '@/components/AuthorCredits'
@@ -11,8 +11,14 @@ export default function Home() {
     localStorage.getItem('isAuthenticated') === 'Authenticated'
 
   const encryptedDataFromStorage = localStorage.getItem('encryptedData')
-  const { name } = decryptData(encryptedDataFromStorage)
-  console.log(name)
+
+  // Esse useMemo ele irá verificar se tem alguma mudança nos dado de nome do usuario, logo após ele irá fazer uma condição para saber se tem os dados, e se estiver, ele retornara o nome do usuario.
+  const nameUser = useMemo(() => {
+    if (encryptedDataFromStorage) {
+      const { name } = decryptData(encryptedDataFromStorage)
+      return name
+    }
+  }, [encryptedDataFromStorage])
 
   function handleLogout(event: FormEvent) {
     event.preventDefault()
@@ -38,9 +44,9 @@ export default function Home() {
     return (
       <div className="md:grid md:text-left flex justify-center text-center min-h-screen grid-cols-2">
         <div className="p-8">
-          <h1 className="text-5xl text-title mb-5 text-bold">Home</h1>
+          <h1 className="text-5xl text-customBlue mb-5 text-bold">Home</h1>
           <p>
-            Olá <span className="text-red-600 bold">{name}</span> sejá
+            Olá <span className="text-red-600 bold">{nameUser}</span> sejá
             bem-vindo!!
           </p>
           <div className="flex flex-col gap-5">
