@@ -14,7 +14,7 @@ module.exports = {
       },
 
       colors: {
-        title: '#4095F8',
+        customBlue: '#4095F8',
       },
 
       backgroundColor: {
