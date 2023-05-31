@@ -1,8 +1,9 @@
+import { UseFormProps } from '@/@types/useForm'
 import { decryptData } from '@/utils/crypto'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-type DataFormProps = { login: string; password: string }
+// type UseFormLoginProps = { }
 
 export function useSignInAuth() {
   const [isVisible, setIsVisible] = useState(false)
@@ -15,9 +16,9 @@ export function useSignInAuth() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<DataFormProps>()
+  } = useForm<UseFormProps>()
 
-  function submitUserLogin({ login, password }: DataFormProps) {
+  function submitUserLogin({ login, password }: UseFormProps) {
     if (login && password) {
       setErrorLogin(false)
       const encryptedDataFromStorage = localStorage.getItem('encryptedData')

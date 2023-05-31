@@ -1,4 +1,5 @@
-export type DataFormProps = {
+export type UseFormProps = {
+  login: string
   email: string
   name: string
   password: string

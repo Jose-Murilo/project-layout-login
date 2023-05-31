@@ -1,4 +1,4 @@
-import { DataFormProps } from '@/app/signup/useForm'
+import { UseFormProps } from '../@types/useForm'
 import { IconBxUserCircle } from '@/assets/IconBxUserCircle'
 import IconEmailOutline from '@/assets/IconEmailOutline'
 import IconEye from '@/assets/IconEye'
@@ -17,14 +17,14 @@ export function FormSignUp() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<DataFormProps>()
+  } = useForm<UseFormProps>()
 
   function createAccount({
     email,
     name,
     password,
     confirmPassword,
-  }: DataFormProps) {
+  }: UseFormProps) {
     if (email && name && password && password === confirmPassword) {
       const dataToEncrypt = {
         email,
