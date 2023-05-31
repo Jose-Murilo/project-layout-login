@@ -54,8 +54,11 @@ export function useChangePassword() {
           } else {
             alert('Os dois campos precisam conter a mesma senha!')
           }
+        } else {
+          alert(
+            'Você tem que adicionar uma senha que seja diferente da passada!',
+          )
         }
-        alert('Você tem que adicionar uma senha que seja diferente da passada!')
       } else {
         alert('Você não tem conta para alterar senha!')
       }
