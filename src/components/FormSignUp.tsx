@@ -83,7 +83,7 @@ export function FormSignUp() {
               <input
                 {...register('email', { required: true })}
                 className="bg-white-transparent text-sm px-8 placeholder:text-black placeholder:text-[15px] p-3 leading-relaxed w-[304px] rounded-full"
-                type="text"
+                type="email"
                 placeholder="Email"
               />
               {errors.email && (
