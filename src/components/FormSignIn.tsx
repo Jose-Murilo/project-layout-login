@@ -41,7 +41,9 @@ export function FormSignIn() {
       >
         <div className="flex flex-col gap-5">
           <section>
-            <h1 className="text-title text-[32px] font-bold">Seja bem-vindo</h1>
+            <h1 className="text-customBlue text-[32px] font-bold">
+              Seja bem-vindo
+            </h1>
           </section>
 
           <section>
@@ -118,23 +120,29 @@ export function FormSignIn() {
           <section className="flex justify-between items-center">
             <div className="flex items-center gap-1">
               <input className="border-2 " id="remember" type="checkbox" />
-              <label htmlFor="remember" className="text-[12px] text-title">
+              <label htmlFor="remember" className="text-[12px] text-customBlue">
                 Relembre
               </label>
             </div>
 
             <div>
-              <Link href={'/changepassword'} className="text-title text-[12px]">
+              <Link
+                href={'/changepassword'}
+                className="text-customBlue text-[12px]"
+              >
                 Esqueci a senha
               </Link>
             </div>
           </section>
 
-          <button className="transition-all hover:bg-[#4085f0] bg-title text-white p-2 mt-2 w-72 rounded-full">
+          <button className="transition-all hover:bg-[#4085f0] bg-customBlue text-white p-2 mt-2 w-72 rounded-full">
             Login
           </button>
 
-          <Link className="text-[12px] text-center text-title" href={'/signup'}>
+          <Link
+            className="text-[12px] text-center text-customBlue"
+            href={'/signup'}
+          >
             Não tem conta? Crie aqui.
           </Link>
         </div>
