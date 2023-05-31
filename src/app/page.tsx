@@ -1,44 +1,13 @@
 'use client'
 
-import { decryptData } from '@/utils/crypto'
-import { FormEvent, useMemo } from 'react'
 import imgHome from '../assets/image-home.svg'
 import Image from 'next/image'
 import { AuthorCredits } from '@/components/AuthorCredits'
+import { useHomePage } from '@/hooks/useHomePage'
 
 export default function Home() {
-  const isAuthenticated =
-    localStorage.getItem('isAuthenticated') === 'Authenticated'
-
-  const encryptedDataFromStorage = localStorage.getItem('encryptedData')
-
-  // Esse useMemo ele irá verificar se tem alguma mudança nos dado de nome do usuario, logo após ele irá fazer uma condição para saber se tem os dados, e se estiver, ele retornara o nome do usuario.
-  const nameUser = useMemo(() => {
-    if (encryptedDataFromStorage) {
-      const { name } = decryptData(encryptedDataFromStorage)
-      return name
-    }
-  }, [encryptedDataFromStorage])
-
-  function handleLogout(event: FormEvent) {
-    event.preventDefault()
-    const confirm = window.confirm('Deseja realmente deslogar?')
-
-    if (confirm) {
-      localStorage.setItem('isAuthenticated', 'notAuthenticated')
-      window.location.href = '/signin'
-    }
-  }
-
-  function deleteUserAccount() {
-    const isDeleted = window.confirm('Deseja realmente apagar sua conta?')
-
-    if (isDeleted) {
-      localStorage.removeItem('encryptedData')
-      localStorage.setItem('isAuthenticated', 'notAuthenticated')
-      window.location.href = '/signin'
-    }
-  }
+  const { deleteUserAccount, handleLogout, isAuthenticated, nameUser } =
+    useHomePage()
 
   if (isAuthenticated) {
     return (
@@ -46,7 +15,7 @@ export default function Home() {
         <div className="p-8">
           <h1 className="text-5xl text-customBlue mb-5 text-bold">Home</h1>
           <p>
-            Olá <span className="text-red-600 bold">{nameUser}</span> sejá
+            Olá <span className="text-red-600 bold">{nameUser}</span> seja
             bem-vindo!!
           </p>
           <div className="flex flex-col gap-5">
@@ -89,7 +58,5 @@ export default function Home() {
         </div>
       </div>
     )
-  } else {
-    window.location.href = '/signin'
   }
 }
