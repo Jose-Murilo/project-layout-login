@@ -147,7 +147,7 @@ export default function ChangePassword() {
                 </div>
               </section>
 
-              <button className="bg-title transition-all hover:bg-[#4085f0] text-white  p-2 mt-2 w-[300px] sm:w-[350px] rounded-full">
+              <button className="bg-customBlue transition-all hover:bg-[#4085f0] text-white  p-2 mt-2 w-[300px] sm:w-[350px] rounded-full">
                 Alterar
               </button>
 
