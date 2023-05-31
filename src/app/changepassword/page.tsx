@@ -3,60 +3,22 @@
 import Link from 'next/link'
 import imgChangePassword from '../../assets/image-change-password.svg'
 import Image from 'next/image'
-import { useForm } from 'react-hook-form'
-import { decryptData, encryptData } from '@/utils/crypto'
-import { useState } from 'react'
 import IconEye from '@/assets/IconEye'
 import IconEyeInvisible from '@/assets/IconEyeInvisible'
 import { IconPadlock } from '@/assets/IconPadlock'
 import { AuthorCredits } from '@/components/AuthorCredits'
-
-type AlterPasswordProps = {
-  newPassword: string
-  confirmNewPassword: string
-}
+import { useChangePassword } from '@/hooks/useChangePassword'
 
 export default function ChangePassword() {
-  const isAuthenticated =
-    localStorage.getItem('isAuthenticated') === 'Authenticated'
   const {
-    register,
+    alterPassword,
+    errors,
+    isAuthenticated,
+    isVisible,
+    setIsVisible,
     handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<AlterPasswordProps>()
-  const [isVisible, setIsVisible] = useState(false)
-
-  function alterPassword({
-    newPassword: password,
-    confirmNewPassword,
-  }: AlterPasswordProps) {
-    const encryptedDataFromStorage = localStorage.getItem('encryptedData')
-    const isChangedPassword = confirm('Deseja realmente alterar a sua senha?')
-
-    if (isChangedPassword) {
-      if (encryptedDataFromStorage) {
-        const { name, email } = decryptData(encryptedDataFromStorage)
-        if (password && confirmNewPassword && password === confirmNewPassword) {
-          const dataToEncrypt = {
-            name,
-            email,
-            password,
-          }
-          console.log(dataToEncrypt)
-
-          const encryptedData = encryptData(dataToEncrypt)
-          localStorage.setItem('encryptedData', encryptedData)
-          reset()
-          alert('Senha alterada com sucesso!')
-        } else {
-          alert('Os dois campos precisam conter a mesma senha!')
-        }
-      } else {
-        alert('Você não tem conta para alterar senha!')
-      }
-    }
-  }
+    register,
+  } = useChangePassword()
 
   if (!isAuthenticated) {
     return (
