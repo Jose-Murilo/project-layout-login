@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import imgSingUp from '../../assets/image-sign-up.svg'
 import { FormSignUp } from '@/components/FormSignUp'
+import { isAuthenticatedAuth } from '@/functions/isAuthenticatedAuth'
 
 export default function SignUp() {
-  const isAuthenticated =
-    localStorage.getItem('isAuthenticated') === 'Authenticated'
+  const isAuthenticated = isAuthenticatedAuth()
 
   if (!isAuthenticated) {
     return (

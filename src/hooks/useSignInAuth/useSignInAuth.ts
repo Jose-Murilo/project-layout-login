@@ -1,4 +1,7 @@
+'use client'
+
 import { UseFormProps } from '@/@types/useForm'
+import { isAuthenticatedAuth } from '@/functions/isAuthenticatedAuth'
 import { decryptData } from '@/utils/crypto'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,8 +11,8 @@ import { useForm } from 'react-hook-form'
 export function useSignInAuth() {
   const [isVisible, setIsVisible] = useState(false)
   const [errorLogin, setErrorLogin] = useState(false)
-  const isAuthenticated =
-    localStorage.getItem('isAuthenticated') === 'Authenticated'
+
+  const isAuthenticated = isAuthenticatedAuth()
 
   const {
     register,
